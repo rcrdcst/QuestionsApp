@@ -13,6 +13,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        if let id = url.getQueryItemValueForKey("question_id") {
+            APIService.instance.getQuestion(Int(id)!, completion: { (result) in
+                //print(url.getQueryItemValueForKey("question_id"))
+                print(id)
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let innerPage: DetailsVC = mainStoryboard.instantiateViewControllerWithIdentifier("details") as! DetailsVC
+                innerPage.question = result
+                self.window?.rootViewController = innerPage
+                
+            })
+        }
+        if let language = url.getQueryItemValueForKey("question_filter") {
+            APIService.instance.filterQuestions(language, completion: { (result) in
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let innerPage: HomeVC = mainStoryboard.instantiateViewControllerWithIdentifier("home") as! HomeVC
+                innerPage.questions = result
+                innerPage.searchBarText = language
+                self.window?.rootViewController = innerPage
+            })
+        }
+
+        return true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
