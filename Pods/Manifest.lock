@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (3.5.1)
+  - BRYXBanner (0.6.3)
+  - Charts (2.3.1):
+    - Charts/Core (= 2.3.1)
+  - Charts/Core (2.3.1)
+  - PullToRefresher (1.4.2)
+  - Reachability (3.2)
+  - SCLAlertView (0.6.0)
+  - SwiftyJSON (2.4.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.5.1)
+  - BRYXBanner (= 0.6.3)
+  - Charts (= 2.3.1)
+  - PullToRefresher (~> 1.4)
+  - Reachability
+  - SCLAlertView (= 0.6.0)
+  - SwiftyJSON (= 2.4.0)
+
+SPEC CHECKSUMS:
+  Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
+  BRYXBanner: f116d4457e0ee380e44c2d0ff1d859e75bf96517
+  Charts: f04119c743c6996ba67fb8016d3a4878a38ca13f
+  PullToRefresher: f5173dbaca14d10417f9d3681ebe097cce10344c
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SCLAlertView: 0f6b3c23a48b4993564ff1dd3c065782e4b2b687
+  SwiftyJSON: 96918c1bf505efa50c4f72957018dd3452090c9c
+
+PODFILE CHECKSUM: d26b80073b23b95ec1b4b433a972a0178a28c95d
+
+COCOAPODS: 1.1.1
