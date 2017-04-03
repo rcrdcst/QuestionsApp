@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import SCLAlertView
+import Reachability
 
 class DetailsVC: UIViewController {
 
@@ -25,6 +26,44 @@ class DetailsVC: UIViewController {
             choiceList.append(choice["choice"].stringValue)
             votes.append(choice["votes"].doubleValue)
         }
+        loadData()
+        let reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+
+        reachability.reachableBlock = { reachability in
+            dispatch_async(dispatch_get_main_queue()) {
+                if reachability.isReachableViaWiFi() {
+                    self.loadData()
+                    print("Reachable via WiFi")
+                } else {
+                    self.loadData()
+                    print("Reachable via Cellular")
+                }
+            }
+        }
+        reachability.unreachableBlock = { reachability in
+            dispatch_async(dispatch_get_main_queue()) {
+                loadBlurView(self.view)
+            }
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+
+
+
+
+    }
+
+    func loadData(){
         barChartView.descriptionText = ""
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         barChartView.xAxis.labelPosition = .BottomInside
@@ -35,6 +74,7 @@ class DetailsVC: UIViewController {
         questionImg.setImageFromURl(stringImageUrl: question.imgURL)
         questionNameLbl.text = question.title
 
+        self.view.viewWithTag(100)?.removeFromSuperview()
     }
 
 

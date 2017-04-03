@@ -27,7 +27,7 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.text = ""
         questionsTableView.delegate = self
         questionsTableView.dataSource = self
         searchBar.delegate = self
@@ -55,7 +55,7 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
         reachability.unreachableBlock = { reachability in
             dispatch_async(dispatch_get_main_queue()) {
-                self.loadBlurView()
+                loadBlurView(self.view)
             }
         }
         
@@ -95,34 +95,11 @@ class HomeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 })
                 self.view.viewWithTag(100)?.removeFromSuperview()
             } else {
-                self.loadBlurView()
+                loadBlurView(self.view)
             }
         }
         dispatch_group_notify(group, dispatch_get_main_queue()) {
             self.stopActivityIndicator()
-        }
-    }
-
-    func loadBlurView(){
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
-            //self.view.backgroundColor = UIColor.clearColor()
-
-            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //always fill the view
-            blurEffectView.frame = self.view.bounds
-            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-            blurEffectView.tag = 100
-
-            let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-            label.textColor = UIColor.whiteColor()
-            label.center = CGPointMake(160, 284)
-            label.textAlignment = NSTextAlignment.Center
-            label.text = "No Connection Available!"
-            blurEffectView.addSubview(label)
-
-
-            self.view.addSubview(blurEffectView) //if you have more UIViews, use an insertSubview API to place it where needed
         }
     }
 

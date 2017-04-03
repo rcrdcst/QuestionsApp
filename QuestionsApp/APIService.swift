@@ -147,14 +147,18 @@ class APIService {
                 case .Failure(let error):
                     print(error)
 
-                    // if web service reports error, sometimes the body of the response
-                    // includes description of the nature of the problem, e.g.
+                    let banner = Banner(title: "Failed to submit the vote", subtitle: "Please try again", image: UIImage(named: "Thumbs Down"), backgroundColor: UIColor(red:0.80, green:0.15, blue:0.15, alpha:1.0))
+                    banner.dismissesOnTap = true
+                    banner.show(duration: 1.5)
 
                     if let data = response.data, let responseString = String(data: data, encoding: NSUTF8StringEncoding) {
                         print(responseString)
                     }
                 case .Success(let responseObject):
-                    print(responseObject)
+                    let banner = Banner(title: "Vote Submited with success", subtitle: "", image: UIImage(named: "Thumb Up"), backgroundColor: UIColor(red:0.09, green:0.68, blue:0.12, alpha:1.0))
+                    banner.dismissesOnTap = true
+                    banner.show(duration: 1.5)
+
                 }
         }
     }
